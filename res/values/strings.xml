@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HonDroid</string>
+    <string name="app_description">The HoN information app</string>
+    <string name="main_btn_hero">Heroes</string>
+    <string name="main_btn_item">Items</string>
+    <string name="homebtn_desc">Home button</string>
+    <string name="heroselecttitle">Choose a hero</string>
+
+</resources>
