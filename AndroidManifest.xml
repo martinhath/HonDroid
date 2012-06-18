@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HeroSelection" android:label="@string/app_name"/>
         <activity android:name=".HeroSelect" android:label="@string/heroselecttitle"/>
+        <activity android:name=".HeroPage"/>
     </application>
 
 </manifest>

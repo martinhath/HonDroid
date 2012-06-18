@@ -1,3 +1,6 @@
+/**
+ * @author MartinHaTh
+ */
 package net.hath.hondroid;
 
 import java.util.List;
@@ -12,6 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Each row in the list. Handles the data in it's constructor
+ * @author MartinHaTh
+ *
+ */
 public class ListAdapter extends ArrayAdapter<String> {
 
 	Context context;
@@ -24,6 +32,9 @@ public class ListAdapter extends ArrayAdapter<String> {
 		heroes = objects;
 	}
 
+	/**
+	 * Returns the view for each row.
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
@@ -47,6 +58,4 @@ public class ListAdapter extends ArrayAdapter<String> {
 
 		return row;
 	}
-	
-
 }

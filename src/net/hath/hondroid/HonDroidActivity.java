@@ -1,3 +1,6 @@
+/**
+ * @Author MartinHaTh
+ */
 package net.hath.hondroid;
 
 import android.app.Activity;
@@ -8,7 +11,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-
+/**
+ * Main activity for the app.
+ * Selection screen. 
+ * 
+ * @author MartinHaTh
+ *
+ */
 public class HonDroidActivity extends Activity {
 	/** Called when the activity is first created. */
 	@Override
