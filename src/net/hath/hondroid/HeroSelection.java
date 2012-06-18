@@ -53,17 +53,6 @@ public class HeroSelection extends ListActivity {
 				}
 			});
 			
-			row.setOnTouchListener(new View.OnTouchListener() {
-				
-				@Override
-				public boolean onTouch(View v, MotionEvent event) {
-					// TODO Auto-generated method stub
-					Log.w("hath", "hei");
-					row.setSelected(true);
-					return false;
-				}
-			});
-			
 			return row;
 		}
 

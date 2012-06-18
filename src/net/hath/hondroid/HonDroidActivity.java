@@ -32,7 +32,7 @@ public class HonDroidActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Log.w("hath", "Hero screen");
-				Intent intent = new Intent(HonDroidActivity.this, HeroSelection.class);
+				Intent intent = new Intent(HonDroidActivity.this, HeroSelect.class);
 				startActivity(intent);
 			}
 		});

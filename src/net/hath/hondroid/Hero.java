@@ -125,6 +125,9 @@ public enum Hero {
 	public int getId(){
 		return id; 
 	}
+	public String getName(){
+		return toString();
+	}
 	@Override
 	public String toString() {
 		return name;
