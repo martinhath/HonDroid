@@ -36,7 +36,6 @@ public class List extends ListView{
 				b.putString("hero", hero.toString());
 				intent.putExtras(b);
 				context.startActivity(intent);
-				((Activity) context).finish();
 			}
 		});
 	}

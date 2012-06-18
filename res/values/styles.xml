@@ -8,4 +8,9 @@
     <style name="main_btn" parent="android:Theme.Holo">
         <item name="android:width">120dp</item>
     </style>
+    <style name="hero_undertitle" parent="android:Widget.Holo.TextView">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+		<item name="android:textSize">18dp</item>
+    </style>
 </resources>
