@@ -1,25 +1,20 @@
 package net.hath.hondroid;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class List extends ListView{
-
-	public List(final Context context) {
+	
+	public List(final Context context, Bundle b) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		setAdapter(new ListAdapter(context, R.layout.list_row, R.id.list_text, Hero.toList()));
-		
-		
-		setOnItemClickListener(new OnItemClickListener() {
+		OnItemClickListener heroclick = new OnItemClickListener() {
 			/**
 			 * The onClickListener for each list item
 			 */
@@ -37,7 +32,18 @@ public class List extends ListView{
 				intent.putExtras(b);
 				context.startActivity(intent);
 			}
-		});
+		};
+
+
+		String type = b.getString("type");
+		if(type.equals("hero")){
+			setAdapter(new ListAdapter(context, R.layout.list_row, R.id.list_text, Hero.toList()));
+			setOnItemClickListener(heroclick);
+		}else if(type.equals("item")){
+			Log.w("hath", "Enter the Item List");
+		}
+		
+		
 	}
 
 }

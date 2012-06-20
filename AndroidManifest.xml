@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HeroSelect" android:label="@string/heroselecttitle"/>
+        <activity android:name=".SelectScreen" android:label="@string/heroselecttitle"/>
         <activity android:name=".HeroPage"/>
     </application>
 

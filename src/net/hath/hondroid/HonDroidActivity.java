@@ -25,7 +25,8 @@ public class HonDroidActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
-
+		
+		// Home
 		((ImageView) findViewById(R.id.header_btn_home)).setOnClickListener(new ImageView.OnClickListener() {
 
 			@Override
@@ -34,24 +35,30 @@ public class HonDroidActivity extends Activity {
 				Log.w("hath", "Home");
 			}
 		});
-
+		// Hero pick screen
 		((Button) findViewById(R.id.main_btn_hero)).setOnClickListener(new Button.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.w("hath", "Hero screen");
-				Intent intent = new Intent(HonDroidActivity.this, HeroSelect.class);
+				Intent intent = new Intent(HonDroidActivity.this, SelectScreen.class);
+				Bundle b = new Bundle();
+				b.putString("type", "hero");
+				intent.putExtras(b);
 				startActivity(intent);
 			}
 		});
-		
+		// Item pick screen
 		((Button) findViewById(R.id.main_btn_item)).setOnClickListener(new Button.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.w("hath", "Item screen");
+				Intent intent = new Intent(HonDroidActivity.this, SelectScreen.class);
+				Bundle b = new Bundle();
+				b.putString("type", "item");
+				intent.putExtras(b);
+				startActivity(intent);
 			}
 		});
 	}

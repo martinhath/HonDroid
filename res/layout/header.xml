@@ -7,12 +7,10 @@
 
     <ImageView
         android:id="@+id/header_btn_home"
-        android:layout_width="0dip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_weight="0"
         android:clickable="true"
-        android:src="@drawable/local" 
-        android:contentDescription="@string/homebtn_desc"/>
+        android:contentDescription="@string/homebtn_desc"
+        android:src="@drawable/local" />
 
 </LinearLayout>

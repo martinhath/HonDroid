@@ -21,22 +21,20 @@ public class HeroPage extends Activity {
 		String heroName = getIntent().getExtras().getString("hero");
 		hero = Hero.getHeroByName(heroName);
 		
-		setImages();
 		setText();
-	}
-	
-	private void setImages(){
+		
 		// Hero Icon
 		((ImageView) findViewById(R.id.hero_icon)).setImageResource(getResources().getIdentifier("heroicon_"+hero.getId(), "drawable", getPackageName()));
 		// Spell 1
-		((ImageView) findViewById(R.id.hero_spell1)).setImageResource(getResources().getIdentifier(String.format("herospell_%d_%d",hero.getId(),1), "drawable", getPackageName()));
+		((SpellView) findViewById(R.id.hero_spell1)).setImage(getResources().getIdentifier("herospell_"+hero.getId()+"_1", "drawable", getPackageName()));
 		// Spell 2
-		((ImageView) findViewById(R.id.hero_spell2)).setImageResource(getResources().getIdentifier(String.format("herospell_%d_%d",hero.getId(),2), "drawable", getPackageName()));
+		((SpellView) findViewById(R.id.hero_spell2)).setImage(getResources().getIdentifier("herospell_"+hero.getId()+"_2", "drawable", getPackageName()));
 		// Spell 3
-		((ImageView) findViewById(R.id.hero_spell3)).setImageResource(getResources().getIdentifier(String.format("herospell_%d_%d",hero.getId(),3), "drawable", getPackageName()));
+		((SpellView) findViewById(R.id.hero_spell3)).setImage(getResources().getIdentifier("herospell_"+hero.getId()+"_3", "drawable", getPackageName()));
 		// Spell 4
-		((ImageView) findViewById(R.id.hero_spell4)).setImageResource(getResources().getIdentifier(String.format("herospell_%d_%d",hero.getId(),4), "drawable", getPackageName()));
+		((SpellView) findViewById(R.id.hero_spell4)).setImage(getResources().getIdentifier("herospell_"+hero.getId()+"_4", "drawable", getPackageName()));
 	}
+	
 	private void setText(){
 		// Hero name
 		((TextView) findViewById(R.id.hero_heroname)).setText(hero.getName());
