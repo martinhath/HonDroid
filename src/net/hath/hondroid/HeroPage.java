@@ -1,10 +1,15 @@
 package net.hath.hondroid;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import net.hath.hondroid.adapter.SpellAdapter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class HeroPage extends Activity {
@@ -25,14 +30,9 @@ public class HeroPage extends Activity {
 		
 		// Hero Icon
 		((ImageView) findViewById(R.id.hero_icon)).setImageResource(getResources().getIdentifier("heroicon_"+hero.getId(), "drawable", getPackageName()));
-		// Spell 1
-		((SpellView) findViewById(R.id.hero_spell1)).setImage(getResources().getIdentifier("herospell_"+hero.getId()+"_1", "drawable", getPackageName()));
-		// Spell 2
-		((SpellView) findViewById(R.id.hero_spell2)).setImage(getResources().getIdentifier("herospell_"+hero.getId()+"_2", "drawable", getPackageName()));
-		// Spell 3
-		((SpellView) findViewById(R.id.hero_spell3)).setImage(getResources().getIdentifier("herospell_"+hero.getId()+"_3", "drawable", getPackageName()));
-		// Spell 4
-		((SpellView) findViewById(R.id.hero_spell4)).setImage(getResources().getIdentifier("herospell_"+hero.getId()+"_4", "drawable", getPackageName()));
+		// Spell names
+		java.util.List<String> liste = Arrays.asList("En", "To", "Tre", "Fire");
+		((ListView) findViewById(R.id.spellist)).setAdapter(new SpellAdapter(this,R.layout.list_row, R.id.list_text, liste));
 	}
 	
 	private void setText(){
@@ -47,6 +47,10 @@ public class HeroPage extends Activity {
 		attribute.setText(hero.getAttribute().toString());
 		attribute.setTextColor(hero.getAttribute().getColor());
 		
+	}
+	
+	public Hero getHero(){
+		return hero;
 	}
 
 }

@@ -1,10 +1,9 @@
-/**
- * @author MartinHaTh
- */
-package net.hath.hondroid;
+package net.hath.hondroid.adapter;
 
 import java.util.List;
 
+import net.hath.hondroid.HeroPage;
+import net.hath.hondroid.R;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -20,16 +19,16 @@ import android.widget.TextView;
  * @author MartinHaTh
  *
  */
-public class ListAdapter extends ArrayAdapter<String> {
+public class SpellAdapter extends ArrayAdapter<String> {
 
 	Context context;
-	List<String> heroes;
+	List<String> spells;
 	
-	public ListAdapter(Context context, int resource, int textViewResourceId, List<String> objects) {
+	public SpellAdapter(Context context, int resource, int textViewResourceId, List<String> objects) {
 		super(context, resource, textViewResourceId, objects);
 		// TODO Auto-generated constructor stub
 		this.context = context;
-		heroes = objects;
+		spells = objects;
 	}
 
 	/**
@@ -45,16 +44,12 @@ public class ListAdapter extends ArrayAdapter<String> {
 			row = inflater.inflate(R.layout.list_row, parent, false);
 		}
 		
-		Hero hero = Hero.getHeroByName(heroes.get(position));
-		
 		ImageView image = (ImageView) row.findViewById(R.id.list_icon);
 		TextView text = (TextView) row.findViewById(R.id.list_text);
 		
-		text.setText(hero.getName());
-		
-		image.setImageResource(context.getResources().getIdentifier("heroicon_"+hero.getId(), "drawable", context.getPackageName()));
-		
-		
+		text.setText("Spell"+(position+1));
+		Log.w("hath", "herospell_"+((HeroPage) context).getHero().getId()+Integer.toString(position+1));
+		image.setImageResource(context.getResources().getIdentifier("herospell_"+((HeroPage) context).getHero().getId()+"_"+Integer.toString(position+1), "drawable", context.getPackageName()));
 
 		return row;
 	}

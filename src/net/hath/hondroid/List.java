@@ -1,5 +1,6 @@
 package net.hath.hondroid;
 
+import net.hath.hondroid.adapter.HeroAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class List extends ListView{
 
 		String type = b.getString("type");
 		if(type.equals("hero")){
-			setAdapter(new ListAdapter(context, R.layout.list_row, R.id.list_text, Hero.toList()));
+			setAdapter(new HeroAdapter(context, R.layout.list_row, R.id.list_text, Hero.toList()));
 			setOnItemClickListener(heroclick);
 		}else if(type.equals("item")){
 			Log.w("hath", "Enter the Item List");

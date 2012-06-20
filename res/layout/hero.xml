@@ -59,24 +59,10 @@
         </LinearLayout>
     </LinearLayout>
 
-    <net.hath.hondroid.SpellView
-        android:id="@+id/hero_spell1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <net.hath.hondroid.SpellView
-        android:id="@+id/hero_spell2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <net.hath.hondroid.SpellView
-        android:id="@+id/hero_spell3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <net.hath.hondroid.SpellView
-        android:id="@+id/hero_spell4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ListView
+        android:id="@+id/spellist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>
