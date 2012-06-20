@@ -2,8 +2,8 @@ package net.hath.hondroid.adapter;
 
 import java.util.List;
 
-import net.hath.hondroid.HeroPage;
 import net.hath.hondroid.R;
+import net.hath.hondroid.activities.HeroPage;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;

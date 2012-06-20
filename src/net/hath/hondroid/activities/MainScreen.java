@@ -1,8 +1,11 @@
 /**
  * @Author MartinHaTh
  */
-package net.hath.hondroid;
+package net.hath.hondroid.activities;
 
+import net.hath.hondroid.R;
+import net.hath.hondroid.R.id;
+import net.hath.hondroid.R.layout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +21,7 @@ import android.widget.ImageView;
  * @author MartinHaTh
  *
  */
-public class HonDroidActivity extends Activity {
+public class MainScreen extends Activity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class HonDroidActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(HonDroidActivity.this, SelectScreen.class);
+				Intent intent = new Intent(MainScreen.this, SelectScreen.class);
 				Bundle b = new Bundle();
 				b.putString("type", "hero");
 				intent.putExtras(b);
@@ -54,7 +57,7 @@ public class HonDroidActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(HonDroidActivity.this, SelectScreen.class);
+				Intent intent = new Intent(MainScreen.this, SelectScreen.class);
 				Bundle b = new Bundle();
 				b.putString("type", "item");
 				intent.putExtras(b);

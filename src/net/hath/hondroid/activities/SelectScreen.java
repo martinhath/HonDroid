@@ -1,5 +1,6 @@
-package net.hath.hondroid;
+package net.hath.hondroid.activities;
 
+import net.hath.hondroid.List;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;

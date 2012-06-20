@@ -10,7 +10,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
-            android:name=".HonDroidActivity"
+            android:name=".activities.MainScreen"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SelectScreen" android:label="@string/heroselecttitle"/>
-        <activity android:name=".HeroPage"/>
+        <activity android:name=".activities.SelectScreen" android:label="@string/heroselecttitle"/>
+        <activity android:name=".activities.HeroPage"/>
     </application>
 
 </manifest>

@@ -1,8 +1,12 @@
-package net.hath.hondroid;
+package net.hath.hondroid.activities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import net.hath.hondroid.Hero;
+import net.hath.hondroid.R;
+import net.hath.hondroid.R.id;
+import net.hath.hondroid.R.layout;
 import net.hath.hondroid.adapter.SpellAdapter;
 import android.app.Activity;
 import android.os.Bundle;

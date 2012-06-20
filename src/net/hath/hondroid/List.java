@@ -1,5 +1,6 @@
 package net.hath.hondroid;
 
+import net.hath.hondroid.activities.HeroPage;
 import net.hath.hondroid.adapter.HeroAdapter;
 import android.content.Context;
 import android.content.Intent;
