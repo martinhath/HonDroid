@@ -42,7 +42,7 @@ public class List extends ListView{
 			setAdapter(new HeroAdapter(context, R.layout.list_row, R.id.list_text, Hero.toList()));
 			setOnItemClickListener(heroclick);
 		}else if(type.equals("item")){
-			Log.w("hath", "Enter the Item List");
+			Log.d("hath", "Enter the Item List");
 		}
 		
 		

@@ -29,6 +29,7 @@ public class SpellAdapter extends ArrayAdapter<String> {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		spells = objects;
+		Log.d("hath", "ctor");
 	}
 
 	/**
@@ -47,10 +48,14 @@ public class SpellAdapter extends ArrayAdapter<String> {
 		ImageView image = (ImageView) row.findViewById(R.id.list_icon);
 		TextView text = (TextView) row.findViewById(R.id.list_text);
 		
-		text.setText("Spell"+(position+1));
-		Log.w("hath", "herospell_"+((HeroPage) context).getHero().getId()+Integer.toString(position+1));
-		image.setImageResource(context.getResources().getIdentifier("herospell_"+((HeroPage) context).getHero().getId()+"_"+Integer.toString(position+1), "drawable", context.getPackageName()));
-
+		if(position==0){
+			text.setText("Stats");
+			return row;
+		}
+		else{
+			text.setText("Spell"+(position));
+		}
+		image.setImageResource(context.getResources().getIdentifier("herospell_"+((HeroPage) context).getHero().getId()+"_"+Integer.toString(position), "drawable", context.getPackageName()));
 		return row;
 	}
 }

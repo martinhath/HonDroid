@@ -18,9 +18,4 @@ public class SpellView extends LinearLayout {
 		//inflate(context, R.layout.spellview, null);
 		content = LayoutInflater.from(context).inflate(R.layout.spellview, this);
 	}
-
-	public void setImage(int resource){
-		
-		((ImageView) findViewById(R.id.spellicon)).setImageResource(resource);
-	}
 }
