@@ -4,19 +4,13 @@
 package net.hath.hondroid.activities;
 
 import net.hath.hondroid.R;
-import net.hath.hondroid.R.id;
-import net.hath.hondroid.R.layout;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 /**
  * Main activity for the app.
  * Selection screen. 

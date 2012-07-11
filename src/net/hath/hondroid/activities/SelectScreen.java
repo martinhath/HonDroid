@@ -1,6 +1,6 @@
 package net.hath.hondroid.activities;
 
-import net.hath.hondroid.List;
+import net.hath.hondroid.ItemList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +17,7 @@ public class SelectScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(new List(this, getIntent().getExtras()));
+		setContentView(new ItemList(this, getIntent().getExtras()));
 	}
 	
 }
