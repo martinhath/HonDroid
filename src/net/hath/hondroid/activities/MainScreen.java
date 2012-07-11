@@ -32,15 +32,7 @@ public class MainScreen extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 		
-		// Home
-		((ImageView) findViewById(R.id.header_btn_home)).setOnClickListener(new ImageView.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Log.w("hath", "Home");
-			}
-		});
+		
 		// Hero pick screen
 		((Button) findViewById(R.id.main_btn_hero)).setOnClickListener(new Button.OnClickListener() {
 
