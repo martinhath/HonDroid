@@ -29,7 +29,6 @@ public class SpellAdapter extends ArrayAdapter<String> {
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		spells = objects;
-		Log.d("hath", "ctor");
 	}
 
 	/**
@@ -42,11 +41,11 @@ public class SpellAdapter extends ArrayAdapter<String> {
 		
 		if(row == null){
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			row = inflater.inflate(R.layout.list_row, parent, false);
+			row = inflater.inflate(R.layout.spellview, parent, false);
 		}
 		
-		ImageView image = (ImageView) row.findViewById(R.id.list_icon);
-		TextView text = (TextView) row.findViewById(R.id.list_text);
+		ImageView image = (ImageView) row.findViewById(R.id.spellicon);
+		TextView text = (TextView) row.findViewById(R.id.spelltitle);
 		
 		if(position==0){
 			text.setText("Stats");
