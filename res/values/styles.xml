@@ -1,16 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Header">
-        <item name="android:textSize">30dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center_horizontal</item>
-    </style>
-    <style name="main_btn" parent="android:Theme.Holo">
-        <item name="android:width">120dp</item>
-    </style>
-    <style name="hero_undertitle" parent="android:Widget.Holo.TextView">
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:layout_marginTop">0dp</item>
-		<item name="android:textSize">18dp</item>
-    </style>
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+
 </resources>
