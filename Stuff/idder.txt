@@ -1,0 +1,3 @@
+Hero: 	dropdown for alle spells. 
+	nice animasjon
+	bytte mellom simple og advanced?
