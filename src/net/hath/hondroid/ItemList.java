@@ -8,10 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ItemList extends ListView{
+public class ItemList extends GridView{
 	
 	public ItemList(final Context context, Bundle b) {
 		super(context);
