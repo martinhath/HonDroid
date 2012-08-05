@@ -1,4 +1,4 @@
-package net.hath.hondroid;
+package net.hath.hondroid.database;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +7,11 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.hath.hondroid.database.DatabaseAdapter;
+import net.hath.hondroid.MainActivity;
+import net.hath.hondroid.R;
+import net.hath.hondroid.R.id;
+import net.hath.hondroid.R.layout;
+import net.hath.hondroid.R.string;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;

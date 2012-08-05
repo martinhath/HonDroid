@@ -29,7 +29,7 @@
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name=".DatabaseCreator"
+            android:name=".database.DatabaseCreator"
             android:label="@string/title_activity_main" 
             android:screenOrientation="portrait" >
         </activity>

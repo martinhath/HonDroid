@@ -9,7 +9,7 @@
     <string name="dbcreate_header">Your database is not up to date!</string>
     <string name="dbcreate_desc">This might be because the app hasn\'t been launched before, or the database is outdated.</string>
     <string name="dbcreate_desc2">It is highly recomended to update the database, as much of the apps content isn\'t available without it.</string>
-    <string name="dbcreate_desc3">Click Create Database to create and update a new database (WiFi is recomended).</string>
+    <string name="dbcreate_desc3">A network connection is requires in order to update.</string>
     <string name="dbcreate_opennetwork">Open WiFi settings</string>
     <string name="dbcreator_connect">Connecting to S2 servers &#8230;</string>
     <string name="dbcreator_connected">Connected!</string>

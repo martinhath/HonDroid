@@ -1,6 +1,7 @@
 package net.hath.hondroid;
 
 import net.hath.hondroid.database.DatabaseAdapter;
+import net.hath.hondroid.database.DatabaseCreator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -33,7 +34,6 @@ public class HathLauncher extends Activity {
 				Log.d("hath", isOnline()+"");
 				if (!isOnline()) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(HathLauncher.this);
-					builder.setTitle(getString(R.string.nonetwork));
 					builder.setMessage(getString(R.string.dbcreate_network));
 					builder.setPositiveButton(getString(R.string.dbcreate_opennetwork), new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
