@@ -33,7 +33,6 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		String CREATE_HERO_TABLE = "CREATE TABLE " + TABLE_HERO + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_FACTION + " TEXT,"
 				+ KEY_ATTRIBUTE + " TEXT," + KEY_ICON_ID + " INTEGER" + ")";
-		Log.d("hath", CREATE_HERO_TABLE);
 		db.execSQL(CREATE_HERO_TABLE);
 	}
 

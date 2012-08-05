@@ -17,6 +17,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -24,39 +25,41 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class DatabaseCreator extends Activity {
 
-	private HashMap<Integer, String> pages;
-	private static final String HON_URL = "http://www.heroesofnewerth.com/heroes.php";
+	private SparseArray<String> pages;
+	private static final String HON_URL = "http://www.heroesofnewerth.com/heroes.php?hero_id=2";
 	private Downloader dl;
 	private ProgressBar pb;
 	private TextView tv;
 	private DatabaseAdapter da;
 
 	private static Handler myHandler;
+	private static boolean isRunning;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.db_creator);
-		pages = new HashMap<Integer, String>();
+		pages = new SparseArray<String>();
 
 		da = new DatabaseAdapter(this);
 
 		tv = (TextView) findViewById(R.id.dbcreator_text);
 		pb = (ProgressBar) findViewById(R.id.dbcreator_progress);
-		dl = new Downloader();
 
-		if (!isConnected()) {
-			tv.setText(R.string.nonetwork);
-			return;
+		if(!isRunning){
+			dl = new Downloader();
+			dl.execute(HON_URL);
+			isRunning = true;
+			Log.d("hath", "LASTER NED, isRunning: "+isRunning);
 		}
-		dl.execute(HON_URL);
-
 		myHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -65,15 +68,16 @@ public class DatabaseCreator extends Activity {
 					ArrayList<Integer> list = new ArrayList<Integer>();
 					String pattern = "\"\\?hero_id=(\\d+)";
 					Pattern p = Pattern.compile(pattern);
-					Matcher m = p.matcher(pages.get(2)); // Get "main page"
+					Matcher m = p.matcher(pages.valueAt(0)); // Get "main page"
 					while (m.find()) {
-						list.add(Integer.parseInt(m.group(1)));
+						if(!m.group(1).equals("2"))
+							list.add(Integer.parseInt(m.group(1)));
 					}
 					Collections.sort(list);
 					// Creates a list of URLs
 					String[] urls = new String[10];
 					for (int i = 0; i < 10; i++) {
-						urls[i] = HON_URL + "?hero_id=" + list.get(i);
+						urls[i] = HON_URL.substring(0, HON_URL.length()-1) + list.get(i);
 					}
 					new Downloader().execute(urls);
 				}
@@ -82,50 +86,39 @@ public class DatabaseCreator extends Activity {
 	}
 
 	private void parse() {
-		int i = 0;
-		int l = pages.keySet().size();
-		for (Integer key : pages.keySet()) {
-			Log.d("hath", pages.get(key).length() + "");
-			i++;
+		for (int i=0;i<pages.size();i++) {
 			// Name
 			String pattern = "hero_name\\\">(\\w+)";
 			Pattern p = Pattern.compile(pattern);
-			Matcher m = p.matcher(pages.get(key));
+			Matcher m = p.matcher(pages.valueAt(i));
 			String name = m.find() ? m.group(1) : "";
 			// Faction
 			pattern = "Team:</span>\\s(\\w+)";
 			p = Pattern.compile(pattern);
-			m = p.matcher(pages.get(key));
+			m = p.matcher(pages.valueAt(i));
 			String faction = m.find() ? m.group(1) : "";
 			// Primary attribute
 			pattern = "Type:</span>\\s(\\w+)";
 			p = Pattern.compile(pattern);
-			m = p.matcher(pages.get(key));
+			m = p.matcher(pages.valueAt(i));
 			String attribute = m.find() ? m.group(1) : "";
 			
-			Log.d("hath", String.format("%d, %s, %s, %s",key,name,faction,attribute));
+			Log.d("hath", String.format("%d, %s, %s, %s",pages.keyAt(i),name,faction,attribute));
 			
-			da.addHero(key, name, faction, attribute);
-			tv.setText(getString(R.string.managing) + i + "/" + l);
+			da.addHero(pages.keyAt(i), name, faction, attribute);
+			tv.setText(getString(R.string.managing) + (i+1) + "/" + pages.size());
 		}
 	}
 
-	private boolean isConnected() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-		return networkInfo != null && networkInfo.isConnected();
-	}
-
 	private class Downloader extends AsyncTask<String, Integer, String> {
-
 		@Override
 		protected String doInBackground(String... urls) {
 			// TODO Auto-generated method stub
+			String page = "";
 			for (int i = 0; i < urls.length; i++) {
 				DefaultHttpClient httpClient = new DefaultHttpClient();
 				HttpGet httpGet = new HttpGet(urls[i]);
 				ResponseHandler<String> resHandler = new BasicResponseHandler();
-				String page = "";
 				try {
 					page = httpClient.execute(httpGet, resHandler);
 				} catch (ClientProtocolException e) {
@@ -135,10 +128,10 @@ public class DatabaseCreator extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				pages.put(urls[i].length()>50?Integer.parseInt(urls[i].substring(50)):2,page);
+				pages.put(Integer.parseInt(urls[i].substring(50)),page);
 				publishProgress(i + 1, urls.length);
 			}
-			return urls.length + "";
+			return page;
 		}
 
 		@Override
@@ -155,7 +148,7 @@ public class DatabaseCreator extends Activity {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			Log.d("hath", "onPostExecute");
-			if (result.equals("1")) {
+			if (pages.size()==1) { // First time
 				tv.setText(R.string.dbcreator_connected);
 				Message msg = myHandler.obtainMessage();
 				msg.arg1 = 1;
@@ -163,6 +156,9 @@ public class DatabaseCreator extends Activity {
 				return;
 			}
 			parse();
+			// Database is complete. 
+			isRunning = false;
+			startActivity(new Intent(DatabaseCreator.this, MainActivity.class));
 		}
 
 	}

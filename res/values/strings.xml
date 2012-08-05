@@ -6,15 +6,17 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="cont">Continue</string>
     <string name="createdb">Create Databse</string>
-    <string name="createdb_header">Your database is empty!</string>
-    <string name="dbcreate_desc">"This might be because the app haven't been launched before, or something bad has happend. "</string>
+    <string name="dbcreate_header">Your database is not up to date!</string>
+    <string name="dbcreate_desc">This might be because the app hasn\'t been launched before, or the database is outdated.</string>
     <string name="dbcreate_desc2">It is highly recomended to update the database, as much of the apps content isn\'t available without it.</string>
-    <string name="dbcreate_desc3">"Click Create Database to create and update a new database (WiFi is recomended)."</string>
+    <string name="dbcreate_desc3">Click Create Database to create and update a new database (WiFi is recomended).</string>
     <string name="dbcreate_opennetwork">Open WiFi settings</string>
-    <string name="dbcreator_connect">Connecting to S2 servers ...</string>
-    <string name="nonetwork">No network available.\nMake sure you are connected to a wireless network. </string>
+    <string name="dbcreator_connect">Connecting to S2 servers &#8230;</string>
     <string name="dbcreator_connected">Connected!</string>
     <string name="downloading">Downloading:\t</string>
     <string name="managing">Managing data:\t</string>
+    <string name="nonetwork">No network connection.</string>
+    <string name="dbcreate_network">A network connection is required in order to update the database.</string>
+    <string name="back">Back</string>
 
 </resources>
