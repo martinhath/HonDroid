@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.hath.hondroid.database.DatabaseAdapter;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,10 +13,13 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HeroFragment extends Fragment {
 
@@ -42,6 +46,13 @@ public class HeroFragment extends Fragment {
 		gv.setDrawSelectorOnTop(true);
 		gv.setNumColumns(GridView.AUTO_FIT);
 		gv.setColumnWidth(SIZE);
+		
+		gv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 
 	private class ImageAdapter extends BaseAdapter {
@@ -58,8 +69,21 @@ public class HeroFragment extends Fragment {
 			for (int i = 0; i < al.size(); i++) {
 				heroes[i] = al.get(i);
 			}
+			new BitmapDownloader().execute();
 		}
 
+		private class BitmapDownloader extends AsyncTask<Void, Integer, Bitmap>{
+
+			@Override
+			protected Bitmap doInBackground(Void... arg0) {
+				// TODO Auto-generated method stub
+				for(int i=0;i<heroes.length;i++){
+					cache.put(i, heroes[i].getIcon(activity));
+				}
+				return null;
+			}
+		}
+		
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
@@ -82,7 +106,6 @@ public class HeroFragment extends Fragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			View view = convertView;
-			Activity activity = getActivity();
 
 			ImageView imageView;
 			TextView textView;
@@ -102,6 +125,8 @@ public class HeroFragment extends Fragment {
 			} else {
 				imageView.setImageBitmap(b);
 			}
+			imageView.setImageBitmap(b);
+
 			textView = (TextView) view.findViewById(R.id.icon_text);
 			textView.setText(heroes[position].getName());
 

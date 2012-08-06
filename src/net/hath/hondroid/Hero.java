@@ -42,7 +42,6 @@ public class Hero implements Comparable<Hero> {
 	public Bitmap getIcon(Context context) {
 		File fname = context.getFileStreamPath("hero_"+id);
 		Bitmap bm = BitmapFactory.decodeFile(fname.toString());
-		Log.i(TAG, "Returning Bitmap at: "+fname);
 		return bm;
 	}
 

@@ -102,7 +102,7 @@ public class DatabaseCreator extends Activity {
 
 	private void parseAndInsert(String html, int id) {
 		// Name
-		String pattern = "hero_name\\\">([\\w\\s]+)";
+		String pattern = "hero_name\\\">([\\w\\s-]+)";
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(html);
 		String name = m.find() ? m.group(1) : "";
