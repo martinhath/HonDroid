@@ -1,5 +1,7 @@
 package net.hath.hondroid.database;
 
+import java.util.ArrayList;
+import java.util.Collections;
 
 import net.hath.hondroid.Attribute;
 import net.hath.hondroid.Faction;
@@ -13,6 +15,7 @@ import android.util.Log;
 
 public class DatabaseAdapter extends SQLiteOpenHelper {
 
+	private static final String TAG = "DatabaseAdapter";
 	private static final int DATABASE_VERSION = 4;
 	private static final String DATABASE_NAME = "HeroManager";
 	private static final String TABLE_HERO = "Hero";
@@ -22,7 +25,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 	private static final String KEY_FACTION = "faction";
 	private static final String KEY_ATTRIBUTE = "attribute";
 	private static final String KEY_ICON_ID = "icon_id";
-	
+
 	public DatabaseAdapter(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		// TODO Auto-generated constructor stub
@@ -36,7 +39,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		db.execSQL(CREATE_HERO_TABLE);
 	}
 
-	public boolean isEmpty(){
+	public boolean isEmpty() {
 		SQLiteDatabase db = this.getReadableDatabase();
 		String q = "SELECT * FROM " + TABLE_HERO;
 		Cursor cursor = db.rawQuery(q, null);
@@ -44,9 +47,16 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		db.close();
 		return ret;
 	}
-	
+
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		// TODO Auto-generated method stub
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_HERO);
+		onCreate(db);
+	}
+
+	@Override
+	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_HERO);
 		onCreate(db);
@@ -65,21 +75,32 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		db.insert(TABLE_HERO, null, values);
 		db.close(); // Closing database connection
 	}
-	
-	public Hero getHero(int id){
-		String query = "SELECT * FROM "+ TABLE_HERO + " WHERE " + KEY_ID + " = " + id;
-		
+
+	public Hero getHero(int id) {
+		String query = "SELECT * FROM " + TABLE_HERO + " WHERE " + KEY_ID + " = " + id;
+
 		SQLiteDatabase db = this.getReadableDatabase();
-	    Cursor cursor = db.rawQuery(query, null);
-		Hero h = new Hero(
-				cursor.getInt(0),
-				cursor.getString(1),
-				Faction.get(cursor.getString(2)),
-				Attribute.get(cursor.getString(3)),
-				0
-						);
+		Cursor cursor = db.rawQuery(query, null);
+		cursor.moveToFirst();
+		Log.i(TAG, "Fetching: " + id + " " + cursor.getString(1));
+		Hero h = new Hero(id, cursor.getString(1), Faction.get(cursor.getString(2)), Attribute.get(cursor.getString(3)));
 		db.close();
 		return h;
+	}
+
+	public ArrayList<Hero> getAllHeroes() {
+		ArrayList<Hero> list = new ArrayList<Hero>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String query = "SELECT * FROM " + TABLE_HERO;
+		Cursor cursor = db.rawQuery(query, null);
+		cursor.moveToFirst();
+		while(!cursor.isLast()){
+			list.add(new Hero(cursor.getInt(0), cursor.getString(1), Faction.get(cursor.getString(2)), Attribute.get(cursor.getString(3))));
+			cursor.moveToNext();
+		}
+		db.close();
+		Collections.sort(list);
+		return list;
 	}
 
 }

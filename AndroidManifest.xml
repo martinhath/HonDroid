@@ -30,8 +30,12 @@
         </activity>
         <activity
             android:name=".database.DatabaseCreator"
-            android:label="@string/title_activity_main" 
+            android:label="@string/title_activity_main"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".HeroActivity"
+            android:label="@string/title_activity_main">
         </activity>
     </application>
 

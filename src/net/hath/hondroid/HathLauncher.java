@@ -19,7 +19,7 @@ public class HathLauncher extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		deleteDatabase("HeroManager"); // FJERNES!
+																	//deleteDatabase("HeroManager"); // FJERNES!
 		DatabaseAdapter da = new DatabaseAdapter(this);
 		if (!da.isEmpty()) {
 			end();
@@ -31,7 +31,6 @@ public class HathLauncher extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.d("hath", isOnline()+"");
 				if (!isOnline()) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(HathLauncher.this);
 					builder.setMessage(getString(R.string.dbcreate_network));

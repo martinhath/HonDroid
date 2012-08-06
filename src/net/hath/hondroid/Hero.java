@@ -1,18 +1,26 @@
 package net.hath.hondroid;
 
-public class Hero {
+import java.io.File;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
+public class Hero implements Comparable<Hero> {
+	
+	private static final String TAG = "Hero";
+	
 	private int id;
 	private String name;
 	private Faction faction;
 	private Attribute attribute;
-	private int icon;
 
-	public Hero(int id, String n, Faction f, Attribute a, int icon) {
+	public Hero(int id, String n, Faction f, Attribute a) {
 		this.id = id;
 		name = n;
 		faction = f;
 		attribute = a;
-		this.icon = icon;
 	}
 
 	public int getId() {
@@ -31,11 +39,17 @@ public class Hero {
 		return attribute;
 	}
 
-	public int getIcon() {
-		return icon;
+	public Bitmap getIcon(Context context) {
+		File fname = context.getFileStreamPath("hero_"+id);
+		Bitmap bm = BitmapFactory.decodeFile(fname.toString());
+		Log.i(TAG, "Returning Bitmap at: "+fname);
+		return bm;
 	}
-	public void setIcon(int id){
-		icon = id;
+
+	@Override
+	public int compareTo(Hero another) {
+		// TODO Auto-generated method stub
+		return name.compareTo(another.getName());
 	}
 
 }
