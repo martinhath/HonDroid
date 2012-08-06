@@ -21,13 +21,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HeroFragment extends Fragment {
+public class HeroSelectionFragment extends Fragment {
 
+	public interface OnHeroSelectListener{
+		public void onHeroSelected(Hero hero);
+	}
+	
 	private static final int SIZE = 160;
 
 	public static final String TAG = "HeroFragment";
 
 	GridView gv;
+	OnHeroSelectListener listener; 
+	
+	
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		try{
+			listener = (OnHeroSelectListener) activity;
+		} catch (ClassCastException e){
+			throw new ClassCastException(activity.toString() + " must implement OnHeroSelectedListener");
+		}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +68,7 @@ public class HeroFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				// TODO Auto-generated method stub
+				listener.onHeroSelected(new DatabaseAdapter(getActivity()).getAllHeroes().get(position));
 			}
 		});
 	}

@@ -81,7 +81,9 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
-		cursor.moveToFirst();
+		if (!cursor.moveToFirst()) {
+			return null;
+		}
 		Log.i(TAG, "Fetching: " + id + " " + cursor.getString(1));
 		Hero h = new Hero(id, cursor.getString(1), Faction.get(cursor.getString(2)), Attribute.get(cursor.getString(3)));
 		db.close();
@@ -93,11 +95,12 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		String query = "SELECT * FROM " + TABLE_HERO;
 		Cursor cursor = db.rawQuery(query, null);
-		cursor.moveToFirst();
-		while(!cursor.isLast()){
-			list.add(new Hero(cursor.getInt(0), cursor.getString(1), Faction.get(cursor.getString(2)), Attribute.get(cursor.getString(3))));
-			cursor.moveToNext();
+		if (!cursor.moveToFirst()) {
+			return list;
 		}
+		do {
+			list.add(new Hero(cursor.getInt(0), cursor.getString(1), Faction.get(cursor.getString(2)), Attribute.get(cursor.getString(3))));
+		} while (cursor.moveToNext());
 		db.close();
 		Collections.sort(list);
 		return list;

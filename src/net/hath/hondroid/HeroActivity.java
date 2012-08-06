@@ -1,9 +1,11 @@
 package net.hath.hondroid;
 
+import net.hath.hondroid.HeroSelectionFragment.OnHeroSelectListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
-public class HeroActivity extends FragmentActivity {
+public class HeroActivity extends FragmentActivity implements OnHeroSelectListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -15,10 +17,17 @@ public class HeroActivity extends FragmentActivity {
 			if (savedInstanceState != null) {
 				return;
 			}
-			HeroFragment hf = new HeroFragment();
+			HeroSelectionFragment hf = new HeroSelectionFragment();
 			hf.setArguments(getIntent().getExtras());
 			getSupportFragmentManager().beginTransaction().add(R.id.fragmentcontainer, hf).commit();
 		}
+	}
+
+	@Override
+	public void onHeroSelected(Hero hero) {
+		// TODO Auto-generated method stub
+		Toast toast = Toast.makeText(getApplicationContext(), hero.getName(), Toast.LENGTH_SHORT);
+		toast.show();
 	}
 
 }
