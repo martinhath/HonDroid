@@ -19,12 +19,11 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class HeroSelectionFragment extends Fragment {
 
 	public interface OnHeroSelectListener{
-		public void onHeroSelected(Hero hero);
+		public void onHeroSelected(int id);
 	}
 	
 	private static final int SIZE = 160;
@@ -68,7 +67,7 @@ public class HeroSelectionFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				// TODO Auto-generated method stub
-				listener.onHeroSelected(new DatabaseAdapter(getActivity()).getAllHeroes().get(position));
+				listener.onHeroSelected(new DatabaseAdapter(getActivity()).getAllHeroes().get(position).getId());
 			}
 		});
 	}
