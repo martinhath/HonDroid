@@ -44,6 +44,11 @@ public class Hero implements Comparable<Hero> {
 		Bitmap bm = BitmapFactory.decodeFile(fname.toString());
 		return bm;
 	}
+	public Bitmap getSpellIcon(Context context, int num){  
+		File fname = context.getFileStreamPath("spell_"+num+"_"+id); // spell_num_id
+		Bitmap bm = BitmapFactory.decodeFile(fname.toString());
+		return bm;
+	}
 
 	@Override
 	public int compareTo(Hero another) {

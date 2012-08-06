@@ -1,13 +1,17 @@
 package net.hath.hondroid;
 
 import net.hath.hondroid.database.DatabaseAdapter;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class HeroFragment extends Fragment {
@@ -21,7 +25,7 @@ public class HeroFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 
 		int heroid = getArguments().getInt("heroid");
-		if(heroid != 0){
+		if (heroid != 0) {
 			hero = new DatabaseAdapter(getActivity()).getHero(heroid);
 			Log.i(TAG, "ID: " + heroid + " Name: " + hero.getName());
 		}
@@ -42,11 +46,55 @@ public class HeroFragment extends Fragment {
 		name.setText(hero.getName());
 		TextView fac = (TextView) view.findViewById(R.id.hero_faction);
 		fac.setText(hero.getFaction().toString());
-		fac.setTextColor(hero.getAttribute().getColor());
+		fac.setTextColor(hero.getFaction().getColor());
 		TextView atr = (TextView) view.findViewById(R.id.hero_attribute);
 		atr.setText(hero.getAttribute().toString());
-		fac.setTextColor(hero.getFaction().getColor());
+		atr.setTextColor(hero.getAttribute().getColor());
+
+		ListView spellist = (ListView) view.findViewById(R.id.spellist);
+		spellist.setAdapter(new SpellListAdapter(hero));
 		return view;
 	}
 
+	private class SpellListAdapter extends BaseAdapter {
+		private Hero hero;
+
+		public SpellListAdapter(Hero h) {
+			hero = h;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return 4;
+		}
+
+		@Override
+		public Object getItem(int arg0) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public long getItemId(int arg0) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			View view = convertView;
+			if(view==null){
+				LayoutInflater la = getLayoutInflater(getArguments());
+				view = la.inflate(R.layout.spell_row, null);
+			}
+			ImageView icon = (ImageView) view.findViewById(R.id.spell_icon);
+			icon.setImageBitmap(hero.getSpellIcon(getActivity(), position+1));
+			TextView tv = (TextView) view.findViewById(R.id.spell_text);
+			tv.setText("Spell "+(position+1));
+			return view;
+		}
+
+	}
 }

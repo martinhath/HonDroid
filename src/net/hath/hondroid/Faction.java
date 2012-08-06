@@ -3,14 +3,18 @@ package net.hath.hondroid;
 import android.util.Log;
 
 public enum Faction {
-	LEGION("Legion"), HELLBOURNE("Hellbourne");
+	HELLBOURNE(0xFFcd554c, "Hellbourne"), LEGION(0xFF63c24a, "Legion");
 
 	private String string;
+	private int color;
 
-	Faction(String s) {
+	Faction(int color, String s) {
 		string = s;
+		this.color = color;
 	}
-
+	public int getColor(){
+		return color;
+	}
 	public String toString() {
 		return string;
 	}

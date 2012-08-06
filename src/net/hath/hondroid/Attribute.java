@@ -3,14 +3,18 @@ package net.hath.hondroid;
 import android.util.Log;
 
 public enum Attribute {
-	STRENGTH("Strength"), AGILITY("Agility"), INTELLIGENCE("Intelligence");
+	STRENGTH(0xFFcd554c, "Strength"), AGILITY(0xFF63c24a, "Agility"), INTELLIGENCE(0xFF4266cf,"Intelligence");
 	
 	private String string;
+	private int color; 
 	
-	Attribute(String s){
+	Attribute(int color, String s){
+		this.color = color;
 		string = s;
 	}
-	
+	public int getColor(){
+		return color;
+	}
 	public String toString(){
 		return string;
 	}
