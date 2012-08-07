@@ -27,7 +27,6 @@ public class HeroFragment extends Fragment {
 		int heroid = getArguments().getInt("heroid");
 		if (heroid != 0) {
 			hero = new DatabaseAdapter(getActivity()).getHero(heroid);
-			Log.i(TAG, "ID: " + heroid + " Name: " + hero.getName());
 		}
 
 	}
@@ -53,6 +52,7 @@ public class HeroFragment extends Fragment {
 
 		ListView spellist = (ListView) view.findViewById(R.id.spellist);
 		spellist.setAdapter(new SpellListAdapter(hero));
+		spellist.setClickable(false);
 		return view;
 	}
 
@@ -91,8 +91,10 @@ public class HeroFragment extends Fragment {
 			}
 			ImageView icon = (ImageView) view.findViewById(R.id.spell_icon);
 			icon.setImageBitmap(hero.getSpellIcon(getActivity(), position+1));
-			TextView tv = (TextView) view.findViewById(R.id.spell_text);
-			tv.setText("Spell "+(position+1));
+			TextView text_title = (TextView) view.findViewById(R.id.spell_title);
+			text_title.setText(hero.getSpell(position).getName());
+			TextView text_desc = (TextView) view.findViewById(R.id.spell_text);
+			text_desc.setText(hero.getSpell(position).getDesc());
 			return view;
 		}
 

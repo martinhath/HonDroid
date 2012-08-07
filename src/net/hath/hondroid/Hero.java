@@ -15,12 +15,14 @@ public class Hero implements Comparable<Hero> {
 	private String name;
 	private Faction faction;
 	private Attribute attribute;
+	private Spell[] spells;
 
-	public Hero(int id, String n, Faction f, Attribute a) {
+	public Hero(int id, String n, Faction f, Attribute a, Spell[] spells) {
 		this.id = id;
 		name = n;
 		faction = f;
 		attribute = a;
+		this.spells = spells;
 	}
 
 	public int getId() {
@@ -54,6 +56,12 @@ public class Hero implements Comparable<Hero> {
 	public int compareTo(Hero another) {
 		// TODO Auto-generated method stub
 		return name.compareTo(another.getName());
+	}
+	public Spell getSpell(int num){
+		return spells[num];
+	}
+	public Spell[] getSpells(){
+		return spells;
 	}
 
 }

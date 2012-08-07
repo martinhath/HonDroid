@@ -3,6 +3,7 @@ package net.hath.hondroid.database;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -121,7 +122,48 @@ public class DatabaseCreator extends Activity {
 
 		Log.i(TAG, String.format("PUT %d, %s, %s, %s", id, name, faction, attribute));
 		da.addHero(id, name, faction, attribute);
+		
+		////////////
+		// Spells //
+		////////////
+		List<String[]> spellStrings = new ArrayList<String[]>();
+		pattern = "<div class=\\\"simple\\\" style=\\\"display:none\\\">\\s*\\n.*"; 
+		p = Pattern.compile(pattern);
+		m = p.matcher(html);
+		while(m.find()){
+			String[] sa = {"",m.group()};
+			spellStrings.add(sa);
+		}
+
+		pattern = "<[^>]*>"; 
+		p = Pattern.compile(pattern);
+		for(int i=0;i<spellStrings.size();i++){
+			m = p.matcher(spellStrings.get(i)[1]);
+			StringBuffer sb = new StringBuffer();
+			while(m.find()){
+				m.appendReplacement(sb, " ");
+			}
+			m.appendTail(sb);
+			String[] s = {"",sb.toString().replaceAll("\\s+", " ").trim()};
+			spellStrings.set(i, s);
+		}
+		
+		// Spell names
+		pattern = "128\\.jpg\\\">\\s*<h1>([\\w\\s']+)</h1>";
+		p = Pattern.compile(pattern);
+		m = p.matcher(html);
+		
+		int counter = 0;
+		while(m.find()){
+			if(!m.group(1).equals("Hero Bio"))
+				spellStrings.get(counter++)[0]=(m.group(1));
+		}
+		
+		for(int i=0;i<4;i++){
+			da.addSpell(id, i, spellStrings.get(i)[0], spellStrings.get(i)[1]);
+		}
 	}
+	
 
 	private class DownloadManager extends AsyncTask<Void, Integer, Void> {
 
@@ -150,7 +192,7 @@ public class DatabaseCreator extends Activity {
 					try {
 						FileOutputStream out = openFileOutput(
 								(j==0?"hero":"spell_"+j)+"_"+i
-								, Context.MODE_WORLD_READABLE);
+								, Context.MODE_PRIVATE);
 						bm.compress(Bitmap.CompressFormat.PNG, 90, out);
 						Log.i(TAG,"FILE: "+getFileStreamPath((j==0?"hero":"spell_"+j)+"_"+i).toString());
 					} catch (Exception e) {
