@@ -12,6 +12,11 @@
 bin/
 gen/
 
+# Package Files #
+*.jar
+*.war
+*.ear
+
 # Local configuration file (sdk path, etc)
 local.properties
 
@@ -19,3 +24,5 @@ local.properties
 .classpath
 .project
 project.properties
+
+
