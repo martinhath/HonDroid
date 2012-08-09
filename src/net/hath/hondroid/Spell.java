@@ -1,6 +1,7 @@
 package net.hath.hondroid;
 
 public class Spell {
+	
 	private String name;
 	private String desc;
 	private int id;
@@ -27,5 +28,8 @@ public class Spell {
 
 	public int getNum() {
 		return num;
+	}
+	public String toString(){
+		return "Spell name: "+name+" Identifier: "+id+"_"+num;
 	}
 }

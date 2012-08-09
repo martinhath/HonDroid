@@ -27,7 +27,9 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 	private static final String KEY_NAME = "name";
 	private static final String KEY_FACTION = "faction";
 	private static final String KEY_ATTRIBUTE = "attribute";
-	private static final String KEY_ICON_ID = "icon_id";
+	// Spell table column names
+	private static final String KEY_HERO_ID = "heroid";
+	private static final String KEY_NUM = "num";
 	private static final String KEY_DESC = "desc";
 
 	public DatabaseAdapter(Context context) {
@@ -39,8 +41,9 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		String CREATE_HERO_TABLE = "CREATE TABLE " + TABLE_HERO + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_FACTION + " TEXT,"
-				+ KEY_ATTRIBUTE + " TEXT," + KEY_ICON_ID + " INTEGER" + ")";
-		String CREATE_SPELL_TABLE = "CREATE TABLE " + TABLE_SPELL + "(" + KEY_ID + " TEXT PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_DESC + " TEXT" + ")";
+				+ KEY_ATTRIBUTE + " TEXT" + ")";
+		String CREATE_SPELL_TABLE = "CREATE TABLE " + TABLE_SPELL + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT," + KEY_DESC
+				+ " TEXT," + KEY_HERO_ID + " INTEGER," + KEY_NUM + " INTEGER" + ")";
 		db.execSQL(CREATE_HERO_TABLE);
 		db.execSQL(CREATE_SPELL_TABLE);
 	}
@@ -94,7 +97,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 			return null;
 		}
 		Log.i(TAG, "Fetching: " + id + " " + cursor.getString(1));
-		Hero h = new Hero(id, cursor.getString(1), Faction.get(cursor.getString(2)), Attribute.get(cursor.getString(3)), getSpells(id));
+		Hero h = new Hero(id, cursor.getString(1), Faction.get(cursor.getString(2)), Attribute.get(cursor.getString(3)));
 		db.close();
 		return h;
 	}
@@ -108,8 +111,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 			return list;
 		}
 		do {
-			list.add(new Hero(cursor.getInt(0), cursor.getString(1), Faction.get(cursor.getString(2)), Attribute.get(cursor.getString(3)), getSpells(cursor
-					.getInt(0))));
+			list.add(new Hero(cursor.getInt(0), cursor.getString(1), Faction.get(cursor.getString(2)), Attribute.get(cursor.getString(3))));
 		} while (cursor.moveToNext());
 		db.close();
 		Collections.sort(list);
@@ -120,9 +122,10 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
-		values.put(KEY_ID, id + "" + num);
 		values.put(KEY_NAME, name);
 		values.put(KEY_DESC, desc);
+		values.put(KEY_HERO_ID, id);
+		values.put(KEY_NUM, num);
 
 		// Inserting Row
 		db.insert(TABLE_SPELL, null, values);
@@ -130,16 +133,29 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 	}
 
 	public Spell[] getSpells(int id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		String query = "SELECT * FROM " + TABLE_SPELL + " WHERE " + KEY_HERO_ID + " = ?";
+		Cursor cursor = db.rawQuery(query, new String[] { Integer.toString(id) });
 		Spell[] spells = new Spell[4];
-		for (int i = 0; i < 4; i++) {
-			spells[i] = getSpell(id, i);
+		// No match
+		if (!cursor.moveToFirst()) { 
+			Log.i(TAG, "Spells for Hero id:" + id + " was not found.");
+			return null;
 		}
+		
+		int counter = 0;
+		do {
+			spells[counter++] = new Spell(cursor.getString(1), cursor.getString(2), id, cursor.getInt(4));
+		} while (cursor.moveToNext());
+
 		return spells;
+
 	}
 
 	public Spell getSpell(int id, int num) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.query(TABLE_SPELL, new String[] { KEY_ID, KEY_NAME, KEY_DESC }, KEY_ID + "=" + id + "" + num, null, null, null, null);
+		String query = "SELECT * FROM " + TABLE_SPELL + " WHERE " + KEY_HERO_ID + " = ? and " + KEY_NUM + " = ?";
+		Cursor cursor = db.rawQuery(query, new String[] { Integer.toString(id), Integer.toString(num) });
 		if (!cursor.moveToFirst()) {
 			return null;
 		}

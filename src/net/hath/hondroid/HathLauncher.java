@@ -19,7 +19,11 @@ public class HathLauncher extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-																	//deleteDatabase("HeroManager"); // FJERNES!
+		
+		
+		deleteDatabase("HeroManager"); // FJERNES!
+		
+		
 		DatabaseAdapter da = new DatabaseAdapter(this);
 		if (!da.isEmpty()) {
 			end();

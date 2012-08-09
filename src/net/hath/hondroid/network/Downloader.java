@@ -1,7 +1,10 @@
 package net.hath.hondroid.network;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -11,6 +14,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.ByteArrayBuffer;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,7 +22,7 @@ import android.net.http.AndroidHttpClient;
 import android.util.Log;
 
 public class Downloader {
-	
+
 	public static Bitmap downloadBitmap(String url) {
 		final AndroidHttpClient client = AndroidHttpClient.newInstance("Android");
 		final HttpGet getRequest = new HttpGet(url);
@@ -60,19 +64,26 @@ public class Downloader {
 	}
 
 	public static String downloadHTML(String url) {
-		String page = "";
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(url);
-		ResponseHandler<String> resHandler = new BasicResponseHandler();
+		int bufferSize = 50;
 		try {
-			page = httpClient.execute(httpGet, resHandler);
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			URL myURL = new URL(url);
+			URLConnection ucon = myURL.openConnection();
+			ucon.setRequestProperty("Connection", "keep-alive");
+			InputStream inputStream = ucon.getInputStream();
+			BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+			ByteArrayBuffer byteArrayBuffer = new ByteArrayBuffer(bufferSize);
+			byte[] buf = new byte[bufferSize];
+			int read;
+			do {
+				read = bufferedInputStream.read(buf, 0, buf.length);
+				if (read > 0)
+					byteArrayBuffer.append(buf, 0, read);
+			} while (read >= 0);
+			return new String(byteArrayBuffer.toByteArray());
+		} catch (Exception e) {
+			Log.i("Error", e.toString());
 		}
-		return page;
+		return null;
+
 	}
 }

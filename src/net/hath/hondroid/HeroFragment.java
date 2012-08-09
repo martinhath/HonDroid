@@ -1,14 +1,14 @@
 package net.hath.hondroid;
 
 import net.hath.hondroid.database.DatabaseAdapter;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -18,15 +18,18 @@ public class HeroFragment extends Fragment {
 
 	private static final String TAG = "HeroFragment";
 	private Hero hero;
+	private DatabaseAdapter da;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
+		da = new DatabaseAdapter(getActivity());
 		int heroid = getArguments().getInt("heroid");
 		if (heroid != 0) {
-			hero = new DatabaseAdapter(getActivity()).getHero(heroid);
+			hero = da.getHero(heroid);
+		}else{ // Sets default hero to Armadon
+			hero = da.getHero(2); 
 		}
 
 	}
@@ -51,16 +54,17 @@ public class HeroFragment extends Fragment {
 		atr.setTextColor(hero.getAttribute().getColor());
 
 		ListView spellist = (ListView) view.findViewById(R.id.spellist);
-		spellist.setAdapter(new SpellListAdapter(hero));
+		Spell[] spells = da.getSpells(hero.getId());
+		spellist.setAdapter(new SpellListAdapter(spells));
 		spellist.setClickable(false);
 		return view;
 	}
 
 	private class SpellListAdapter extends BaseAdapter {
-		private Hero hero;
+		private Spell[] spells;
 
-		public SpellListAdapter(Hero h) {
-			hero = h;
+		public SpellListAdapter(Spell[] spells) {
+			this.spells = spells;
 		}
 
 		@Override
@@ -85,16 +89,27 @@ public class HeroFragment extends Fragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			View view = convertView;
-			if(view==null){
+			if (view == null) {
 				LayoutInflater la = getLayoutInflater(getArguments());
 				view = la.inflate(R.layout.spell_row, null);
 			}
+			Spell spell = spells[position];
+			
+			if(spell==null){
+				Log.w(TAG, "Spell "+hero.getName()+"_"+(position+1)+" is null");
+				return view;
+			}
+			
 			ImageView icon = (ImageView) view.findViewById(R.id.spell_icon);
-			icon.setImageBitmap(hero.getSpellIcon(getActivity(), position+1));
+			icon.setImageBitmap(hero.getSpellIcon(getActivity(), position + 1));
 			TextView text_title = (TextView) view.findViewById(R.id.spell_title);
-			text_title.setText(hero.getSpell(position).getName());
+			text_title.setText(spell.getName());
 			TextView text_desc = (TextView) view.findViewById(R.id.spell_text);
-			text_desc.setText(hero.getSpell(position).getDesc());
+			text_desc.setText(spell.getDesc());
+
+			ListView.LayoutParams params = new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, ListView.LayoutParams.WRAP_CONTENT);
+			view.setLayoutParams(params);
+			
 			return view;
 		}
 

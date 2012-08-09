@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -27,7 +28,6 @@
             android:layout_weight="1"
             android:padding="@dimen/padding_medium"
             android:text="@string/createdb" />
-
     </LinearLayout>
 
     <TextView
@@ -69,6 +69,16 @@
         android:layout_centerHorizontal="true"
         android:padding="@dimen/padding_large"
         android:text="@string/dbcreate_desc3"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/dbcreate_warn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/padding_large"
+        android:text="@string/dbcreate_warn"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

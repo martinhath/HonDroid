@@ -23,12 +23,13 @@ import android.widget.TextView;
 public class HeroSelectionFragment extends Fragment {
 
 	public interface OnHeroSelectListener{
-		public void onHeroSelected(int id);
+		public void onHeroSelected(Hero hero);
 	}
 	
 	private static final int SIZE = 160;
 
 	public static final String TAG = "HeroFragment";
+	private Hero[] heroes;
 
 	GridView gv;
 	OnHeroSelectListener listener; 
@@ -67,13 +68,12 @@ public class HeroSelectionFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 				// TODO Auto-generated method stub
-				listener.onHeroSelected(new DatabaseAdapter(getActivity()).getAllHeroes().get(position).getId());
+				listener.onHeroSelected(heroes[position]);
 			}
 		});
 	}
 
 	private class ImageAdapter extends BaseAdapter {
-		private Hero[] heroes;
 		private Activity activity;
 		private SparseArray<Bitmap> cache;
 

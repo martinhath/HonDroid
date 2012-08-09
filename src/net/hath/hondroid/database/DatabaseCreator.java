@@ -40,7 +40,7 @@ public class DatabaseCreator extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.db_creator);
-		
+
 		da = new DatabaseAdapter(this);
 
 		tv = (TextView) findViewById(R.id.dbcreator_text);
@@ -69,6 +69,15 @@ public class DatabaseCreator extends Activity {
 			ids.add(Integer.parseInt(m.group(1)));
 		}
 		Collections.sort(ids);
+
+		/**
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		for(int i=0;i<5;i++){
+			temp.add(ids.get(i));
+		}
+		*/
+		
+		
 		return ids;
 	}
 
@@ -101,6 +110,7 @@ public class DatabaseCreator extends Activity {
 		return sa;
 	}
 
+	// TODO: Clean up this whole method. It looks like shit. 
 	private void parseAndInsert(String html, int id) {
 		// Name
 		String pattern = "hero_name\\\">([\\w\\s-]+)";
@@ -122,48 +132,48 @@ public class DatabaseCreator extends Activity {
 
 		Log.i(TAG, String.format("PUT %d, %s, %s, %s", id, name, faction, attribute));
 		da.addHero(id, name, faction, attribute);
-		
-		////////////
+
+		// //////////
 		// Spells //
-		////////////
+		// //////////
 		List<String[]> spellStrings = new ArrayList<String[]>();
-		pattern = "<div class=\\\"simple\\\" style=\\\"display:none\\\">\\s*\\n.*"; 
+		pattern = "<div class=\\\"simple\\\" style=\\\"display:none\\\">\\s*\\n.*";
 		p = Pattern.compile(pattern);
 		m = p.matcher(html);
-		while(m.find()){
-			String[] sa = {"",m.group()};
+		while (m.find()) {
+			String[] sa = { "", m.group() };
 			spellStrings.add(sa);
 		}
 
-		pattern = "<[^>]*>"; 
+		pattern = "<[^>]*>";
 		p = Pattern.compile(pattern);
-		for(int i=0;i<spellStrings.size();i++){
+		for (int i = 0; i < spellStrings.size(); i++) {
 			m = p.matcher(spellStrings.get(i)[1]);
 			StringBuffer sb = new StringBuffer();
-			while(m.find()){
+			while (m.find()) {
 				m.appendReplacement(sb, " ");
 			}
 			m.appendTail(sb);
-			String[] s = {"",sb.toString().replaceAll("\\s+", " ").trim()};
+			// Removes multiple white space in a row, around slahses and before periods.  
+			String[] s = { "", sb.toString().replaceAll("\\s+", " ").trim().replaceAll("[/\\s]{3}", "/").replaceAll("\\s\\.", "\\.") };
 			spellStrings.set(i, s);
 		}
-		
+
 		// Spell names
-		pattern = "128\\.jpg\\\">\\s*<h1>([\\w\\s']+)</h1>";
+		pattern = "128\\.jpg\\\">\\s*<h1>([\\w\\s'-]+)</h1>";
 		p = Pattern.compile(pattern);
 		m = p.matcher(html);
-		
+
 		int counter = 0;
-		while(m.find()){
-			if(!m.group(1).equals("Hero Bio"))
-				spellStrings.get(counter++)[0]=(m.group(1));
+		while (m.find()) {
+			if (!m.group(1).equals("Hero Bio"))
+				spellStrings.get(counter++)[0] = (m.group(1));
 		}
-		
-		for(int i=0;i<4;i++){
+
+		for (int i = 0; i < 4; i++) {
 			da.addSpell(id, i, spellStrings.get(i)[0], spellStrings.get(i)[1]);
 		}
 	}
-	
 
 	private class DownloadManager extends AsyncTask<Void, Integer, Void> {
 
@@ -171,8 +181,7 @@ public class DatabaseCreator extends Activity {
 		protected Void doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			Log.i(TAG, "Starting DB update");
-			
-			
+
 			ArrayList<Integer> ids = getIDs(HON_URL);
 			SparseArray<String> urls = getURLs(ids);
 			SparseArray<String[]> imageurls = getImageURLs(ids);
@@ -180,8 +189,8 @@ public class DatabaseCreator extends Activity {
 			for (int i : ids) {
 				// Downloads the urls, parses them, and inserts them into the
 				// database
-				publishProgress(counter++,ids.size());
-				
+				publishProgress(counter++, ids.size());
+
 				String url = urls.get(i);
 				String site = Downloader.downloadHTML(url);
 				parseAndInsert(site, i);
@@ -190,11 +199,8 @@ public class DatabaseCreator extends Activity {
 				for (int j = 0; j < 5; j++) {
 					Bitmap bm = Downloader.downloadBitmap(imageurls.get(i)[j]);
 					try {
-						FileOutputStream out = openFileOutput(
-								(j==0?"hero":"spell_"+j)+"_"+i
-								, Context.MODE_PRIVATE);
+						FileOutputStream out = openFileOutput((j == 0 ? "hero" : "spell_" + i) + "_" + j, Context.MODE_PRIVATE);
 						bm.compress(Bitmap.CompressFormat.PNG, 90, out);
-						Log.i(TAG,"FILE: "+getFileStreamPath((j==0?"hero":"spell_"+j)+"_"+i).toString());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -223,5 +229,4 @@ public class DatabaseCreator extends Activity {
 		}
 	}
 
-	
 }
