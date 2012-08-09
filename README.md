@@ -1,1 +1,2 @@
-#HonDroid - A Heroes of Newerth Android app
+#HonDroid
+A Heroes of Newerth Android app. 
