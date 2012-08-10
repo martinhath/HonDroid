@@ -1,9 +1,11 @@
 package net.hath.hondroid;
 
+import net.hath.hondroid.database.DatabaseCreator;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -22,6 +24,7 @@ public class MainActivity extends Activity {
 				startActivity(new Intent(MainActivity.this, HeroActivity.class));
 			}
 		});
+
 	}
 
 	@Override
@@ -30,4 +33,19 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		case R.id.menu_update:
+			updateDB();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void updateDB() {
+		startActivity(new Intent(this, DatabaseCreator.class));
+	}
 }

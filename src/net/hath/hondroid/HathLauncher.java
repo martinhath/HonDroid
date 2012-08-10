@@ -21,7 +21,7 @@ public class HathLauncher extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		
-		deleteDatabase("HeroManager"); // FJERNES!
+		//deleteDatabase("HeroManager"); // FJERNES!
 		
 		
 		DatabaseAdapter da = new DatabaseAdapter(this);
