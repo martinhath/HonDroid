@@ -23,7 +23,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class DatabaseCreator extends Activity {
+public class DatabaseCreatorActivity extends Activity {
 
 	private static final String HON_URL = "http://www.heroesofnewerth.com/heroes.php?hero_id=2";
 	private static final String HON_ICON = "http://www.heroesofnewerth.com/images/heroes/%d/icon_128.jpg";
@@ -70,7 +70,7 @@ public class DatabaseCreator extends Activity {
 		}
 		Collections.sort(ids);
 
-		/**
+		/**  Temp loop for emulating ID list of 5 numbers only
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		for(int i=0;i<5;i++){
 			temp.add(ids.get(i));
@@ -155,7 +155,7 @@ public class DatabaseCreator extends Activity {
 			}
 			m.appendTail(sb);
 			// Removes multiple white space in a row, around slahses and before periods.  
-			String[] s = { "", sb.toString().replaceAll("\\s+", " ").trim().replaceAll("[/\\s]{3}", "/").replaceAll("\\s\\.", "\\.") };
+			String[] s = { "", sb.toString().replaceAll("\\s+", " ").trim().replaceAll("[/\\s]{3}", "/").replaceAll("\\s[\\.]", "\\.") };
 			spellStrings.set(i, s);
 		}
 
@@ -199,7 +199,7 @@ public class DatabaseCreator extends Activity {
 				for (int j = 0; j < 5; j++) {
 					Bitmap bm = Downloader.downloadBitmap(imageurls.get(i)[j]);
 					try {
-						FileOutputStream out = openFileOutput((j == 0 ? "hero" : "spell_" + i) + "_" + j, Context.MODE_PRIVATE);
+						FileOutputStream out = openFileOutput(String.format(j==0?"hero_%d":("spell_%d_"+j),i), Context.MODE_PRIVATE);
 						bm.compress(Bitmap.CompressFormat.PNG, 90, out);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -224,8 +224,8 @@ public class DatabaseCreator extends Activity {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
-			DatabaseCreator.this.startActivity(new Intent(DatabaseCreator.this, MainActivity.class));
-			DatabaseCreator.this.finish();
+			DatabaseCreatorActivity.this.startActivity(new Intent(DatabaseCreatorActivity.this, MainActivity.class));
+			DatabaseCreatorActivity.this.finish();
 		}
 	}
 

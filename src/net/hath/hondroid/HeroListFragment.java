@@ -20,34 +20,38 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class HeroSelectionFragment extends Fragment {
+public class HeroListFragment extends Fragment {
 
-	public interface OnHeroSelectListener{
+	public interface OnHeroSelectListener {
 		public void onHeroSelected(Hero hero);
 	}
-	
-	private static final int SIZE = 160;
 
-	public static final String TAG = "HeroFragment";
+	public static final int SIZE = 160;
+
+	public static final String TAG = "HeroListFragment";
 	private Hero[] heroes;
 
 	GridView gv;
-	OnHeroSelectListener listener; 
-	
-	
+	OnHeroSelectListener listener;
+
+	public HeroListFragment() {
+	}
+
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
-		try{
+		try {
 			listener = (OnHeroSelectListener) activity;
-		} catch (ClassCastException e){
-			throw new ClassCastException(activity.toString() + " must implement OnHeroSelectedListener");
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ " must implement OnHeroSelectedListener");
 		}
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		return inflater.inflate(R.layout.grid_view, container, false);
 	}
@@ -63,10 +67,11 @@ public class HeroSelectionFragment extends Fragment {
 		gv.setDrawSelectorOnTop(true);
 		gv.setNumColumns(GridView.AUTO_FIT);
 		gv.setColumnWidth(SIZE);
-		
+
 		gv.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View v,
+					int position, long id) {
 				// TODO Auto-generated method stub
 				listener.onHeroSelected(heroes[position]);
 			}
@@ -89,18 +94,18 @@ public class HeroSelectionFragment extends Fragment {
 			new BitmapDownloader().execute();
 		}
 
-		private class BitmapDownloader extends AsyncTask<Void, Integer, Bitmap>{
+		private class BitmapDownloader extends AsyncTask<Void, Integer, Bitmap> {
 
 			@Override
 			protected Bitmap doInBackground(Void... arg0) {
 				// TODO Auto-generated method stub
-				for(int i=0;i<heroes.length;i++){
+				for (int i = 0; i < heroes.length; i++) {
 					cache.put(i, heroes[i].getIcon(activity));
 				}
 				return null;
 			}
 		}
-		
+
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub

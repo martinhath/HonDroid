@@ -1,6 +1,6 @@
 package net.hath.hondroid;
 
-import net.hath.hondroid.database.DatabaseCreator;
+import net.hath.hondroid.database.DatabaseCreatorActivity;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(MainActivity.this, HeroActivity.class));
+				startActivity(new Intent(MainActivity.this, HeroScreenActivity.class));
 			}
 		});
 
@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case R.id.menu_update:
+			deleteDatabase("hondb");
 			updateDB();
 			return true;
 		default:
@@ -46,6 +47,6 @@ public class MainActivity extends Activity {
 	}
 
 	private void updateDB() {
-		startActivity(new Intent(this, DatabaseCreator.class));
+		startActivity(new Intent(this, DatabaseCreatorActivity.class));
 	}
 }

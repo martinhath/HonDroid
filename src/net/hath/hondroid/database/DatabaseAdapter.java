@@ -19,7 +19,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 	private static final String TAG = "DatabaseAdapter";
 
 	private static final int DATABASE_VERSION = 1;
-	private static final String DATABASE_NAME = "HeroManager";
+	private static final String DATABASE_NAME = "hondb";
 	private static final String TABLE_HERO = "Hero";
 	private static final String TABLE_SPELL = "Spell";
 	// Hero table column names
@@ -147,7 +147,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		do {
 			spells[counter++] = new Spell(cursor.getString(1), cursor.getString(2), id, cursor.getInt(4));
 		} while (cursor.moveToNext());
-
+		db.close();
 		return spells;
 
 	}

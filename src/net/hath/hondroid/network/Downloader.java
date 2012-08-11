@@ -23,6 +23,8 @@ import android.util.Log;
 
 public class Downloader {
 
+	private static final String TAG = "Downloader";
+
 	public static Bitmap downloadBitmap(String url) {
 		final AndroidHttpClient client = AndroidHttpClient.newInstance("Android");
 		final HttpGet getRequest = new HttpGet(url);

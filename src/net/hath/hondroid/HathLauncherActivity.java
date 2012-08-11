@@ -1,7 +1,7 @@
 package net.hath.hondroid;
 
 import net.hath.hondroid.database.DatabaseAdapter;
-import net.hath.hondroid.database.DatabaseCreator;
+import net.hath.hondroid.database.DatabaseCreatorActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -13,16 +13,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-public class HathLauncher extends Activity {
+public class HathLauncherActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
-		
-		//deleteDatabase("HeroManager"); // FJERNES!
-		
+
 		
 		DatabaseAdapter da = new DatabaseAdapter(this);
 		if (!da.isEmpty()) {
@@ -32,11 +29,10 @@ public class HathLauncher extends Activity {
 
 		Button btn_crt = (Button) findViewById(R.id.dbcreate_create);
 		btn_crt.setOnClickListener(new View.OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (!isOnline()) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(HathLauncher.this);
+					AlertDialog.Builder builder = new AlertDialog.Builder(HathLauncherActivity.this);
 					builder.setMessage(getString(R.string.dbcreate_network));
 					builder.setPositiveButton(getString(R.string.dbcreate_opennetwork), new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
@@ -57,7 +53,6 @@ public class HathLauncher extends Activity {
 		});
 		Button btn_cont = (Button) findViewById(R.id.dbcreate_cont);
 		btn_cont.setOnClickListener(new View.OnClickListener() {
-			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				end();
@@ -67,7 +62,7 @@ public class HathLauncher extends Activity {
 	}
 
 	private void cont() {
-		startActivity(new Intent(this, DatabaseCreator.class));
+		startActivity(new Intent(this, DatabaseCreatorActivity.class));
 		finish();
 	}
 

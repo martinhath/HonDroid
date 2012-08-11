@@ -1,40 +1,52 @@
 package net.hath.hondroid;
 
-import net.hath.hondroid.HeroSelectionFragment.OnHeroSelectListener;
+import net.hath.hondroid.HeroListFragment.OnHeroSelectListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
-public class HeroActivity extends FragmentActivity implements OnHeroSelectListener{
+public class HeroScreenActivity extends FragmentActivity implements
+		OnHeroSelectListener {
 
-	HeroSelectionFragment hsf;
-	HeroFragment hf;
-	
+	private static final String TAG = "HeroScreenActivity";
+	HeroListFragment hsf;
+	HeroScreenFragment hf;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_container);
+		setContentView(R.layout.hero_screen);
 
+		// Small screen
 		if (findViewById(R.id.fragmentcontainer) != null) {
+			Log.i(TAG, "Small screen detected");
 			if (savedInstanceState != null) {
 				return;
 			}
-			hsf= new HeroSelectionFragment();
+			hsf = new HeroListFragment();
 			hsf.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().add(R.id.fragmentcontainer, hsf).commit();
-		}
+			getSupportFragmentManager().beginTransaction()
+					.add(R.id.fragmentcontainer, hsf).commit();
+		} 
 	}
 
-	@Override
 	public void onHeroSelected(Hero hero) {
 		// TODO Auto-generated method stub
-		hf = new HeroFragment();
+		// Large layout
+		HeroScreenFragment hs = (HeroScreenFragment) getSupportFragmentManager().findFragmentById(R.id.hero_fragment);
+		if(hs != null){
+			hs.updateView(hero);
+			return;
+		}
+		hf = new HeroScreenFragment();
 		Bundle arg = new Bundle();
 		arg.putInt("heroid", hero.getId());
 		hf.setArguments(arg);
-		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager()
+				.beginTransaction();
 		transaction.remove(hsf);
 		transaction.replace(R.id.fragmentcontainer, hf);
 		transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
