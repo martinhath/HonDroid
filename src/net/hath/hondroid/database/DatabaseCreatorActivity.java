@@ -62,7 +62,7 @@ public class DatabaseCreatorActivity extends Activity {
 	private ArrayList<Integer> getIDs(String url) {
 		ArrayList<Integer> ids = new ArrayList<Integer>();
 		String html = Downloader.downloadHTML(url);
-		String pattern = "\"\\?hero_id=(\\d+)";
+		String pattern = "heroes/(\\d+)/icon_128";
 		Pattern p = Pattern.compile(pattern);
 		Matcher m = p.matcher(html);
 		while (m.find()) {
@@ -77,7 +77,7 @@ public class DatabaseCreatorActivity extends Activity {
 		}
 		*/
 		
-		
+		Log.d(TAG, ids.size()+" IDs found.");
 		return ids;
 	}
 
@@ -193,6 +193,7 @@ public class DatabaseCreatorActivity extends Activity {
 
 				String url = urls.get(i);
 				String site = Downloader.downloadHTML(url);
+				Log.d(TAG, "URL length: "+site.length());
 				parseAndInsert(site, i);
 
 				// Downloads and saves the images.
