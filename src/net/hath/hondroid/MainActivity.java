@@ -24,7 +24,15 @@ public class MainActivity extends Activity {
 				startActivity(new Intent(MainActivity.this, HeroScreenActivity.class));
 			}
 		});
-
+		findViewById(R.id.update_button).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				deleteAndUpdateDB();
+			}
+		});
+		
 	}
 
 	@Override
@@ -38,15 +46,15 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case R.id.menu_update:
-			deleteDatabase("hondb");
-			updateDB();
+			deleteAndUpdateDB();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void updateDB() {
+	private void deleteAndUpdateDB() {
+		deleteDatabase("hondb");
 		startActivity(new Intent(this, DatabaseCreatorActivity.class));
 	}
 }

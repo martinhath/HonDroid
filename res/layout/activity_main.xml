@@ -11,4 +11,12 @@
         android:layout_centerVertical="true"
         android:text="Heroes" />
 
+    <Button
+        android:id="@+id/update_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/main_btn"
+        android:layout_alignParentBottom="true"
+        android:text="Update" />
+
 </RelativeLayout>
