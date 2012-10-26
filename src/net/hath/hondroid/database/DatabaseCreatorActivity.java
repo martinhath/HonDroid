@@ -3,6 +3,7 @@ package net.hath.hondroid.database;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,7 +61,7 @@ public class DatabaseCreatorActivity extends Activity {
 	}
 
 	private ArrayList<Integer> getIDs(String url) {
-		ArrayList<Integer> ids = new ArrayList<Integer>();
+		HashSet<Integer> ids = new HashSet<Integer>();
 		String html = Downloader.downloadHTML(url);
 		String pattern = "heroes/(\\d+)/icon_128";
 		Pattern p = Pattern.compile(pattern);
@@ -68,7 +69,8 @@ public class DatabaseCreatorActivity extends Activity {
 		while (m.find()) {
 			ids.add(Integer.parseInt(m.group(1)));
 		}
-		Collections.sort(ids);
+		ArrayList<Integer> idlist = new ArrayList<Integer>(ids);
+		Collections.sort(idlist);
 
 		/**  Temp loop for emulating ID list of 5 numbers only
 		ArrayList<Integer> temp = new ArrayList<Integer>();
@@ -77,8 +79,8 @@ public class DatabaseCreatorActivity extends Activity {
 		}
 		*/
 		
-		Log.d(TAG, ids.size()+" IDs found.");
-		return ids;
+		Log.d(TAG, idlist.size()+" IDs found.");
+		return idlist;
 	}
 
 	private SparseArray<String> getURLs(ArrayList<Integer> ids) {
@@ -193,15 +195,19 @@ public class DatabaseCreatorActivity extends Activity {
 
 				String url = urls.get(i);
 				String site = Downloader.downloadHTML(url);
-				Log.d(TAG, "URL length: "+site.length());
 				parseAndInsert(site, i);
-
 				// Downloads and saves the images.
 				for (int j = 0; j < 5; j++) {
+					String name = String.format(j==0?"hero_%d":("spell_%d_"+j),i);
+					if(getFileStreamPath(name).exists()){
+						Log.d(TAG, "File exists, skip.");
+						continue;
+					}
 					Bitmap bm = Downloader.downloadBitmap(imageurls.get(i)[j]);
 					try {
-						FileOutputStream out = openFileOutput(String.format(j==0?"hero_%d":("spell_%d_"+j),i), Context.MODE_PRIVATE);
+						FileOutputStream out = openFileOutput(name, Context.MODE_PRIVATE);
 						bm.compress(Bitmap.CompressFormat.PNG, 90, out);
+						Log.d(TAG, "Creating new file");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

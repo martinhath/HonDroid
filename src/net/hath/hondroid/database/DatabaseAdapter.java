@@ -86,6 +86,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		// Inserting Row
 		db.insert(TABLE_HERO, null, values);
 		db.close(); // Closing database connection
+		Log.d(TAG, "Hero added: "+name);
 	}
 
 	public Hero getHero(int id) {
@@ -130,6 +131,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 		// Inserting Row
 		db.insert(TABLE_SPELL, null, values);
 		db.close(); // Closing database connection
+		Log.d(TAG, "Spell added: "+name);
 	}
 
 	public Spell[] getSpells(int id) {
