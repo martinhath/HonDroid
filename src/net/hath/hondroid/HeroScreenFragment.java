@@ -77,6 +77,16 @@ public class HeroScreenFragment extends Fragment {
 		
 	}
 
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		Bundle args = outState;
+		args.putInt("heroid", hero.getId());
+	}
+
+
 	private class SpellListAdapter extends BaseAdapter {
 		private Spell[] spells;
 

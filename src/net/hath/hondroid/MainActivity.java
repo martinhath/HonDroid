@@ -24,14 +24,7 @@ public class MainActivity extends Activity {
 				startActivity(new Intent(MainActivity.this, HeroScreenActivity.class));
 			}
 		});
-		findViewById(R.id.update_button).setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				deleteAndUpdateDB();
-			}
-		});
+
 		
 	}
 

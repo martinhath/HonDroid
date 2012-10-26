@@ -8,13 +8,15 @@
     <fragment
         android:id="@+id/heroselection_fragment"
         android:name="net.hath.hondroid.HeroListFragment"
-        android:layout_width="280dp"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3" />
 
     <fragment
         android:id="@+id/hero_fragment"
         android:name="net.hath.hondroid.HeroScreenFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="match_parent" 
+        android:layout_weight="5"/>
 
 </LinearLayout>
